@@ -1,0 +1,155 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body styling - center calculator */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f4f8; /* pleasant light background */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Calculator container */
+.calculator {
+  width: 90%;
+  max-width: 320px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Display area */
+.display {
+  background: #222222;
+  border-radius: 8px;
+  overflow: hidden;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.display .expression {
+  background: #2c2c2c;
+  padding: 0.5rem 0.75rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1rem;
+  text-align: right;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.display .result {
+  background: #1e1e1e;
+  padding: 0.75rem 0.75rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.5rem;
+  text-align: right;
+  color: #00e676; /* success colour for normal result */
+}
+
+/* Error state for result */
+.display .result.error {
+  color: #ff3b30; /* red for errors */
+}
+
+/* Buttons grid */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.buttons button {
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  font-family: inherit;
+}
+
+.buttons button:focus {
+  outline: 2px solid #4d90fe;
+  outline-offset: 2px;
+}
+
+.buttons button:hover {
+  transform: translateY(-2px);
+}
+
+/* Digit and decimal buttons */
+.buttons button[data-action="digit"],
+.buttons button[data-action="decimal"] {
+  background: #e0e0e0;
+  color: #000000;
+}
+
+.buttons button[data-action="digit"]:hover,
+.buttons button[data-action="decimal"]:hover {
+  background: #d5d5d5;
+}
+
+/* Operator buttons */
+.buttons button[data-action="operator"] {
+  background: #ff9500; /* accent/orange */
+  color: #ffffff;
+}
+
+.buttons button[data-action="operator"]:hover {
+  background: #e68a00;
+}
+
+/* Clear and backspace buttons */
+.buttons button[data-action="clear"],
+.buttons button[data-action="backspace"] {
+  background: #ff3b30; /* warning/red */
+  color: #ffffff;
+}
+
+.buttons button[data-action="clear"]:hover,
+.buttons button[data-action="backspace"]:hover {
+  background: #e63228;
+}
+
+/* Equals button */
+.buttons button[data-action="equals"] {
+  background: #34c759; /* success/green */
+  color: #ffffff;
+}
+
+.buttons button[data-action="equals"]:hover {
+  background: #2fb04e;
+}
+
+/* Media queries for very small screens */
+@media (max-width: 360px) {
+  .calculator {
+    padding: 0.75rem;
+  }
+
+  .display .expression {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .display .result {
+    font-size: 1.3rem;
+    padding: 0.6rem 0.6rem;
+  }
+
+  .buttons button {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
