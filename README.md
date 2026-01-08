@@ -1,96 +1,106 @@
-# LangGraph Project - Engineering Project Planner
+# AI Code Generator
 
-## What is this?
+Multi-agent AI system that automatically generates code projects using LangGraph.
 
-This is my first attempt at building an AI agent system using LangGraph! It's basically an AI that can plan, architect, and code entire software projects automatically. Pretty cool stuff.
+## Features
 
-## What I learned
+- **Multi-Agent Architecture**: 3 specialized AI agents (Planner, Architect, Coder) working together
+- **Web Interface**: Clean Streamlit UI with real-time progress
+- **Automatic Code Generation**: Input an idea, get complete HTML/CSS/JavaScript projects
+- **Fast LLM**: Uses Groq API for 10x faster response times
 
-### 1. LangGraph is awesome but tricky
-- LangGraph lets you create workflows with multiple AI agents that work together
-- Each agent has a specific job (planner, architect, coder)
-- The agents pass information between each other using a shared state
-- Getting the state management right was the hardest part!
+## Quick Start
 
-### 2. Multi-agent systems
-I created three different agents:
-- **Planner Agent**: Takes user input and creates a high-level project plan
-- **Architect Agent**: Breaks down the plan into specific coding tasks
-- **Coder Agent**: Actually writes the code files using tools
+### Prerequisites
+- Python 3.11 or 3.12
+- Groq API key (free from [console.groq.com](https://console.groq.com))
 
-### 3. Pydantic for data validation
-Used Pydantic models to make sure data between agents is structured properly:
-- `Plan` - holds the overall project structure
-- `TaskPlan` - list of implementation tasks
-- `CoderState` - tracks progress through coding tasks
+### Installation
 
-### 4. Tool integration
-The coder agent can actually interact with the file system:
-- Read existing files
-- Write new files
-- List directories
-- Run shell commands
-
-This was mind-blowing - an AI that can actually create real files!
-
-## How to run it
-
-**Important**: Use Python 3.11 or 3.12 (Python 3.14+ has compatibility issues with LangChain)
-
-1. Create a virtual environment with Python 3.11:
 ```bash
+# Clone repository
+git clone https://github.com/YuvrajZende/Coding-Agent-with-LangGraph
+cd Coding-Agent-with-LangGraph
+
+# Create virtual environment
 python3.11 -m venv venv311
-venv311\Scripts\activate
+venv311\Scripts\activate  # Windows
+# or
+source venv311/bin/activate  # Mac/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up API key
+echo "GROQ_API_KEY=your_key_here" > .env
 ```
 
-2. Install dependencies:
+### Run
+
+**Web UI:**
 ```bash
-pip install groq langchain langchain-core langchain-groq langgraph pydantic python-dotenv
+streamlit run app.py
 ```
 
-3. Set up your Groq API key in `.env`:
-```
-GROQ_API_KEY=your_key_here
-```
-
-4. Run the main script:
+**Command Line:**
 ```bash
 python main.py
 ```
 
-5. Enter your project idea when prompted!
+## How It Works
 
-## Example
+```
+User Input → Planner Agent → Architect Agent → Coder Agent → Generated Code
+```
 
-I tested it with "create a simple calculator app" and it actually generated a working calculator with HTML, CSS, and JavaScript files. Not perfect, but pretty impressive for a first try.
+1. **Planner**: Analyzes user request and creates project plan
+2. **Architect**: Breaks plan into specific implementation tasks  
+3. **Coder**: Writes actual code files using LangChain tools
 
-## What I struggled with
+## Project Structure
 
-- **Python version compatibility** - Had to use Python 3.11 instead of 3.14 due to LangChain dependencies
-- Import statements (relative vs absolute imports are confusing)
-- State management between agents
-- Getting the conditional edges right in the graph
-- Tool function docstrings (LangChain requires proper docstrings for all tools)
-- Path validation for file operations
-- Debugging LangGraph workflows (still learning this)
-- Making sure the AI agents don't go into infinite loops
+```
+├── agent/              # Core AI agent logic (see agent/README.md)
+│   ├── graph.py       # Agent definitions and workflow
+│   ├── states.py      # Pydantic data models
+│   ├── prompts.py     # Agent instructions
+│   └── tools.py       # File operations
+├── app.py             # Streamlit web interface
+├── main.py            # CLI interface
+└── requirements.txt   # Dependencies
+```
 
-## What's next
+## Technologies
 
-- Add better error handling
-- Make the generated code more robust
-- Add support for different programming languages
-- Maybe add a reviewer agent to check the code quality
-- Learn more about prompt engineering to get better results
+- **LangGraph** - Multi-agent orchestration
+- **Groq** - Fast LLM API (llama-3.1-70b)
+- **LangChain** - Tool calling framework
+- **Streamlit** - Web interface
+- **Pydantic** - Data validation
 
-## Dependencies
+## Examples
 
-- `langgraph` - for the multi-agent workflow
-- `langchain` - AI framework
-- `groq` - fast LLM inference
-- `pydantic` - data validation
-- `python-dotenv` - environment variables
+```
+Input: "Build a simple calculator"
+Output: index.html, styles.css, script.js, README.md
+
+Input: "Create a todo list"
+Output: Complete todo app with local storage
+
+Input: "Make a contact form"
+Output: Form with validation and styling
+```
+
+## Limitations
+
+- Generates HTML/CSS/JavaScript only (no backend)
+- Free tier rate limits apply
+- Best for simple web projects
+
+## License
+
+MIT
 
 ---
 
-*This was a fun learning project! Still lots to improve but I'm excited about what AI agents can do.*
+Built with LangGraph • Groq • Python

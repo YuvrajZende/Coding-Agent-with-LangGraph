@@ -9,7 +9,10 @@ PROJECT_ROOT = pathlib.Path.cwd() / "generated_project"
 
 def safe_path_for_project(path: str) -> pathlib.Path:
     p = (PROJECT_ROOT / path).resolve()
-    if PROJECT_ROOT.resolve() not in p.parents and PROJECT_ROOT.resolve() != p.parent and PROJECT_ROOT.resolve() != p:
+    # Check if the resolved path is within PROJECT_ROOT
+    try:
+        p.relative_to(PROJECT_ROOT.resolve())
+    except ValueError:
         raise ValueError("Attempt to write outside project root")
     return p
 
